@@ -1,0 +1,70 @@
+import React from 'react';
+import Question from './Question';
+
+export default function QuestionPage() {
+  const [questions, setQuestions] = React.useState([]);
+  const [checkAnswer, setCheckAnswer] = React.useState(false);
+  const [isAnswered, setIsAnswered] = React.useState(false);
+  // console.log('state variables declared ---');
+  function checkAnswers() {
+    // console.log(checkAnswer);
+    if (isAnswered) {
+      setCheckAnswer(true);
+    }
+    // setCheckAnswer(true);
+  }
+
+  function newGame() {
+    setCheckAnswer(false);
+    setQuestions([]);
+    setIsAnswered(false);
+  }
+
+  React.useEffect(() => {
+    // console.log('initialRender');
+    console.log('fetching');
+    fetch('https://opentdb.com/api.php?amount=1&type=multiple')
+      .then((response) => response.json())
+      .then((data) => {
+        // if (old.length !== 0) { return old; }
+
+        const questionsArr = [];
+        for (let i = 0; i < data.results.length; i += 1) {
+          questionsArr.push(
+            {
+              correctAnswer: data.results[i].correct_answer,
+              incorrectAnswers: data.results[i].incorrect_answers,
+              question: data.results[i].question,
+            },
+          );
+        }
+        setQuestions(questionsArr);
+      });
+    // console.log(questions);
+  }, []);
+  console.log('before QuestionPage return');
+  console.log(questions);
+  return (
+    questions.length !== 0
+      && (
+        <>
+          <Question
+            question={questions[0]}
+            id={1}
+            checkAnswer={checkAnswer}
+            isAnswered={isAnswered}
+            setIsAnswered={setIsAnswered}
+          />
+          {/* <Question question={questions[1]} id={2} />
+          <Question question={questions[2]} id={3} />
+          <Question question={questions[3]} id={4} />
+          <Question question={questions[4]} id={5} /> */}
+          {checkAnswer
+            ? <button onClick={newGame} type="button">Play again</button>
+
+            : <button onClick={checkAnswers} type="button">Check answers</button>}
+        </>
+      )
+
+  );
+}
