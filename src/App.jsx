@@ -6,6 +6,7 @@ import blob2 from './assets/blob2.png';
 import settingsIcon from './assets/settings_icon.svg';
 import QuestionsPage from './components/QuestionsPage';
 import SettingsPage from './components/SettingsPage';
+import rotateSmartphone from './assets/smartphone-rotate.svg';
 
 function App() {
   const [isStartPage, setIsStartPage] = React.useState(true);
@@ -34,6 +35,10 @@ function App() {
   }, []);
   return (
     <>
+      <div className="rotate-smartphone-container">
+        <h2 className="rotate-smartphone-text">Please rotate your phone</h2>
+        <img src={rotateSmartphone} className="rotate-smartphone-icon" alt="rotate smartphone" />
+      </div>
       { isStartPage
         ? (
           <StartPage
