@@ -1,22 +1,16 @@
-// eslint-disable-next-line import/no-extraneous-dependencies
-// import PropTypes from 'gi-types';
-import React from 'react';
+import { React } from "react";
+import { Link } from "react-router-dom";
 
-export default function StartPage({ setIsStartPage }) {
-  function startGame() {
-    setIsStartPage(false);
-  }
+export default function StartPage() {
   return (
     <div className="start-page-container">
-      <h1 className="title">Quizzical</h1>
-      <p className="description">answer questions and earn points</p>
-      <button className="start-button" type="button" onClick={startGame}>Start quiz</button>
-
+      <h1 className="start-page-title">Quizzical</h1>
+      <p className="start-page-description">answer questions and earn points</p>
+      <Link to="/questions-page">
+        <button className="start-page-button" type="button">
+          Start quiz
+        </button>
+      </Link>
     </div>
   );
 }
-
-// StartPage.propTypes = {
-//   setIsStartPage: PropTypes.func.isRequired,
-
-// };
